@@ -1,5 +1,6 @@
 
-	#include <stdio.h> #include <stdlib.h>
+	#include <stdio.h>
+#include <stdlib.h>
 void dijkstra(int graph[10][10],int V) {
 int distance[V], predefine[V], visited[V];
 int startnode, count, min_distance, nextnode, i, j; printf("\nEnter the start node: ");
@@ -11,7 +12,7 @@ distance[startnode] = 0; visited[startnode] = 1; count = 1; while(count<V-1) {
 min_distance = 99; for(i=0; i<V; i++) {
 if(distance[i] < min_distance && visited[i]==0) {
 min_distance = distance[i];
-23
+
 nextnode = i; }
 }
 visited[nextnode] = 1; for(i=0;i<V;i++)
@@ -29,7 +30,7 @@ do
 {
 j = predefine[j]; printf(" <- %d",j);
 } while (j != startnode); }
-24
+
 
 } }
 int main() {
