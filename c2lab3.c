@@ -1,86 +1,44 @@
-#include <limits.h>
-#include <stdbool.h>
-#include <stdio.h>
 
-
-#define V 9
-
-
-int minDistance(int dist[], bool sptSet[])
-{
-
-	int min = INT_MAX, min_index;
-
-	for (int v = 0; v < V; v++)
-		if (sptSet[v] == false && dist[v] <= min)
-			min = dist[v], min_index = v;
-
-	return min_index;
+	#include <stdio.h> #include <stdlib.h>
+void dijkstra(int graph[10][10],int V) {
+int distance[V], predefine[V], visited[V];
+int startnode, count, min_distance, nextnode, i, j; printf("\nEnter the start node: ");
+scanf("%d", &startnode);
+for(i=0; i<V; i++) {
+distance[i] = graph[startnode][i]; predefine[i] = startnode; visited[i] = 0;
 }
-
-
-void printSolution(int dist[])
-{
-	printf("Vertex \t\t Distance from Source\n");
-	for (int i = 0; i < V; i++)
-		printf("%d \t\t\t\t %d\n", i, dist[i]);
+distance[startnode] = 0; visited[startnode] = 1; count = 1; while(count<V-1) {
+min_distance = 99; for(i=0; i<V; i++) {
+if(distance[i] < min_distance && visited[i]==0) {
+min_distance = distance[i];
+23
+nextnode = i; }
 }
-
-void dijkstra(int graph[V][V], int src)
+visited[nextnode] = 1; for(i=0;i<V;i++)
 {
-	int dist[V]; 
-				
-	
-
-	bool sptSet[V]; 
-					
-	for (int i = 0; i < V; i++)
-		dist[i] = INT_MAX, sptSet[i] = false;
-
-	
-	dist[src] = 0;
-
-	
-	for (int count = 0; count < V - 1; count++) {
-		
-	
-	
-		int u = minDistance(dist, sptSet);
-
-		
-		sptSet[u] = true;
-
-		
-		
-		for (int v = 0; v < V; v++)
-
-			
-			if (!sptSet[v] && graph[u][v]
-				&& dist[u] != INT_MAX
-				&& dist[u] + graph[u][v] < dist[v])
-				dist[v] = dist[u] + graph[u][v];
-	}
-
-	
-	printSolution(dist);
-}
-
-
-int main()
+if(visited[i] == 0) {
+if((min_distance + graph[nextnode][i]) < distance[i]) {
+distance[i] = min_distance + graph[nextnode][i];
+predefine[i] = nextnode; }
+} }
+count = count + 1; }
+for(i=0;i<V;i++) { if(i!=startnode) {
+printf("\nDistance of node %d = %d", i, distance[i]); printf("\nPath = %d",i);
+j = i;
+do
 {
-	
-	int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
-						{ 4, 0, 8, 0, 0, 0, 0, 11, 0 },
-						{ 0, 8, 0, 7, 0, 4, 0, 0, 2 },
-						{ 0, 0, 7, 0, 9, 14, 0, 0, 0 },
-						{ 0, 0, 0, 9, 0, 10, 0, 0, 0 },
-						{ 0, 0, 4, 14, 10, 0, 2, 0, 0 },
-						{ 0, 0, 0, 0, 0, 2, 0, 1, 6 },
-						{ 8, 11, 0, 0, 0, 0, 1, 0, 7 },
-						{ 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
+j = predefine[j]; printf(" <- %d",j);
+} while (j != startnode); }
+24
 
-	
-	dijkstra(graph, 0);
-
-	return 0;
-}
+} }
+int main() {
+int i, j;
+int V;
+printf("Enter the number of vertices: "); scanf("%d", &V);
+int graph[V][V];
+printf("\nEnter the cost/weight matrix: \n"); for(i=0; i<V; i++) {
+for(j=0;j<V;j++) { scanf("%d", &graph[i][j]);
+} }
+dijkstra(graph, V);
+return 0; }
